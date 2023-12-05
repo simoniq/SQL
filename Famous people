@@ -1,0 +1,56 @@
+#This project utilzied the following Famous people data. 
+
+CREATE TABLE singers (id INTEGER PRIMARY KEY,
+artist TEXT,
+song TEXT, 
+year INTEGER);
+
+INSERT INTO singers (artist, song, year) 
+    VALUES ("T-Pain", "Stripper", "2000");
+
+INSERT INTO singers (artist, song, year) 
+    VALUES ("Michael Jackson", "Annie", "2005");
+    
+INSERT INTO singers (artist, song, year) 
+    VALUES ("Mario", "Icebox", "1995");
+    
+INSERT INTO singers (artist, song, year) 
+    VALUES ("Justin T.", "Summer Love", "2003");
+    
+CREATE TABLE details (id INTEGER PRIMARY KEY,
+birth TEXT, 
+visit TEXT,
+frequency INTEGER);
+
+INSERT INTO details (birth, visit, frequency)
+    VALUES ("Chicago", "Boston", "5");
+INSERT INTO details (birth, visit, frequency) 
+    VALUES ("NYC", "LA", "30");
+INSERT INTO details (birth, visit, frequency) 
+    VALUES ("LA", "NYC", "25");
+INSERT INTO details (birth, visit, frequency) 
+    VALUES ("NYC", "Boston", "9");
+    
+    
+#Which artists visited Boston at least 5 times? 
+SELECT singers.artist
+FROM singers
+JOIN details
+ON singers.id = details.id 
+WHERE details.frequency >= "5" 
+AND details.visit = "Boston"
+;
+
+#What is the average networth of artist born in New York City?
+SELECT AVG(networth) AS avg_nyc_artist_networth
+FROM details
+;
+
+#Which artist have a Networth of over $200M *and* is born in NYC? 
+SELECT singers.artist, details.networth
+FROM singers
+JOIN details
+ON singers.id = details.id 
+WHERE details.networth > "200" 
+AND birth = "NYC"
+;
