@@ -37,6 +37,7 @@ artist_name
 ,avg(energy)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name
+;
 
 #Then I determined the top 10 most popular songs with a danceability score of at least .7. 
 
@@ -48,15 +49,56 @@ FROM BIT_DB.spotifydata
 WHERE danceability >= 0.7
 GROUP BY track_name 
 ORDER BY popularity DESC
-LIMIT 10; 
+LIMIT 10
+; 
 
-#And what artist had released the longest song.  
+#What artist had released the longest song.  
 
 SELECT artist_name, track_name
 FROM BIT_DB.Spotifydata
 ORDER BY duration_ms desc
-LIMIT 1;
+LIMIT 1
+;
 
+#What's the average danceability for the 10 most popular songs?
 
+SELECT avg(danceability) 
+FROM (SELECT * FROM Spotifydata ORDER BY popularity DESC LIMIT 10)
+;
+
+#What's the average danceability for the 10 most popular songs? (use CTEs to find your answer)
+WITH songpopularity AS (
+SELECT 
+artist_name
+    ,track_name
+    ,popularity
+    ,danceability
+FROM Spotifydata 
+ORDER BY popularity DESC LIMIT 10)
+
+SELECT 
+artist_name
+    ,track_name
+    ,AVG(danceability) AS average_danceability
+FROM songpopularity
+;
+
+#Calculate the average popularity for the artists in the Spotify data table. Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”.
+
+WITH avg_popularity_CTE AS (
+SELECT 
+s.artist_name,
+AVG(s.popularity) AS avg_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+
+SELECT 
+    artist_name,
+    avg_popularity,
+    'Top Star' AS tag
+FROM avg_popularity_CTE
+WHERE avg_popularity>=90
+; 
 
 
