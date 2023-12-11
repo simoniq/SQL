@@ -1,0 +1,49 @@
+#For this project, I worked through multiple data tables to figure out who the murderer was. https://mystery.knightlab.com/ 
+
+SELECT *
+FROM crime_scene_report
+WHERE city = 'SQL City'
+AND type = 'murder'
+;
+
+SELECT *
+FROM person
+WHERE address_street_name = 'Northwestern Dr'
+ORDER BY address_number ASC LIMIT 1
+;
+
+SELECT *
+FROM person
+WHERE address_street_name = 'Franklin Ave'
+AND name LIKE '%Annabel%'
+;
+
+SELECT *
+FROM interview
+WHERE person_id = 16371
+;
+
+SELECT *
+FROM interview
+WHERE person_id = 89906;
+
+SELECT m.name, ci.check_in_date, ci.check_in_time, ci.check_out_time
+FROM get_fit_now_check_in ci
+JOIN get_fit_now_member m
+ON ci.membership_id = m.id
+WHERE ci.check_in_date = 20180109
+
+SELECT *
+FROM interview
+WHERE person_id = 67318
+
+SELECT p.name, p.id
+FROM facebook_event_checkin fb
+JOIN person p
+ON fb.person_id = p.id
+WHERE event_name = 'SQL Symphony Concert'
+AND date LIKE '%201712%'
+
+SELECT * 
+FROM person
+WHERE id =	99716
